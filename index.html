@@ -1,0 +1,58 @@
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"></link> 
+<script src="lib/jquery.min.js"></script>
+<script src="lib//bootstrap.min.js"></script> 
+<script src="lib/angular.min.js" type="text/javascript"></script>  
+<script src="app.js" type="text/javascript"></script>
+<script src="controllers/tasksController.js" type="text/javascript"></script>
+<script src="services/tasksService.js" type="text/javascript"></script>
+
+<div ng-app="todoApp" ng-controller="tasksController"> 
+
+<div class="widget-box" id="recent-box" ng-controller="tasksController">
+<div class="widget-header header-color-blue">
+<div class="row">
+<div class="col-sm-6">
+<h4 class="bigger lighter">
+	<i class="glyphicon glyphicon-align-justify"></i>&nbsp;TODO Manager
+</h4>
+</div>
+<div class="col-sm-3">
+<button ng-click="addNewClicked=!addNewClicked;" class="btn btn-sm btn-danger header-elements-margin"><i class="glyphicon  glyphicon-plus"></i>&nbsp;Add New Task</button>
+</div>
+<div class="col-sm-3">
+
+<input type="text" ng-model="filterTask" class="form-control search header-elements-margin" placeholder="Filter Tasks">
+
+</div>
+</div></div>
+<div class="widget-body ">
+<form ng-init="addNewClicked=false; " ng-if="addNewClicked" id="newTaskForm" class="add-task">
+<div class="form-actions">
+<div class="input-group">
+<input type="text" class="form-control" name="comment" ng-model="taskInput" placeholder="Add New Task" ng-focus="addNewClicked">
+<div class="input-group-btn">
+<button class="btn btn-default" type="submit" ng-click="addTask(taskInput)"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add New Task</button>
+</div>
+</div>
+</div>
+</form>
+<div class="task">
+	<div class="grid">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><h4>#</h4></div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><h4>Title</h4></div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><h4>Completed</h4></div>
+			<div class="col-lg-3 col-sm-3 col-sm-3 col-xs-3"><h4>Action</h4></div>
+		</div>
+		<div class="row" ng-repeat="task in tasks | filter : filterTask | orderBy:'completed'">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><h5>{{$index + 1}}.</h5></div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{task.title}}</div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><input type="checkbox" value="{{task.completed}}" ng-checked="task.completed" ng-click="toggleStatus(task.id)"/></div>
+			<div class="col-lg-3 col-sm-3 col-sm-3 col-xs-3">
+				<button class="btn btn-default" type="submit" ng-click="deleteTask(task.id)"><i class="glyphicon glyphicon-trash"></i>&nbsp;Delete Task</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
